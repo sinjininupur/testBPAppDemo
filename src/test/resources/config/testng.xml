@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite" parallel="tests" thread-count="3">
+   
+    
+    
+    <!-- <listeners>
+<listener class-name="com.ibm.nestle.farms.utilities.CustomReport"/>
+</listeners> -->
+  <test name="Test1" enabled="true">
+     <parameter name="deviceName" value="Samsung Galaxy Tab A 10 GoogleAPI Emulator"/>
+   <parameter name="browsername" value="chrome"/>
+      <parameter name="sheetname" value="Sheet1"/>
+    <parameter name="rowno" value="2"/>
+  
+        
+    <classes>
+      <class name="com.ibm.bp.testapp.testcase.AppTest"/>
+    </classes>
+    
+    </test>
+    
+ 
+   <test name="Test2_Mobile">
+        <parameter name="deviceName" value="Samsung Galaxy S6 GoogleAPI Emulator"/>
+   <parameter name="browsername" value="chrome"/>
+      <parameter name="sheetname" value="Sheet1"/>
+      <parameter name="rowno" value="1"/>
+        <classes>
+      <class name="com.ibm.bp.testapp.testcase.AppTest"/>
+    </classes>
+    </test>
+  
+    
+</suite>

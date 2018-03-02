@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="tests">
+  <test name="Test3_Browser(failed)" parallel="tests">
+    <parameter name="rowno" value="3"/>
+    <parameter name="sheetname" value="Sheet1"/>
+    <parameter name="browsername" value="chrome"/>
+    <parameter name="deviceName" value="Windows 10"/>
+    <classes>
+      <class name="com.ibm.bp.testapp.testcase.AppTest">
+        <methods>
+          <include name="endOfTest"/>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="checkappnew"/>
+        </methods>
+      </class> <!-- com.ibm.bp.testapp.testcase.AppTest -->
+    </classes>
+  </test> <!-- Test3_Browser(failed) -->
+</suite> <!-- Failed suite [Suite] -->
