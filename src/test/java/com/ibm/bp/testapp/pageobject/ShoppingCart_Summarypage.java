@@ -62,6 +62,7 @@ public class ShoppingCart_Summarypage {
 		basics.printLineToReport("Verification", "User navigates to screen: Checkout-Sign in page", "pass");
 		
 		
+		
 	}
 
 }
