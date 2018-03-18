@@ -19,8 +19,8 @@ import io.appium.java_client.remote.MobilePlatform;
 
 
 public class basics {
-	   public static final String USERNAME = "sinjiniroy";
-	    public static final String ACCESS_KEY = "57d29449-998f-40ab-b264-08caebcbbe11";
+	   public static final String USERNAME = "souravroy";
+	    public static final String ACCESS_KEY = "d293c675-44a7-4ef2-9f9e-e0c558687bc5";
 	    public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
 
 
