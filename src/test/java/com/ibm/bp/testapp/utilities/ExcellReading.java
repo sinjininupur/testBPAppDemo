@@ -237,5 +237,259 @@ public class ExcellReading {
 
 	
 
+	public String getDataFromPath(String fpath, String sheetname, int rowNumber, String columnName) throws IOException {
+
+		FileInputStream inputStream = new FileInputStream(new File(fpath));
+
+		//Map<Integer, List<String>> data = new HashMap<Integer, List<String>>();
+
+		Workbook workbook = new XSSFWorkbook(inputStream);
+
+		Sheet sheet = workbook.getSheet(sheetname);
+
+		int flag = 0;
+		String cellValue = "";
+		Row headerRow = sheet.getRow(0);
+		Row row = sheet.getRow(rowNumber);
+
+			//Iterator<Cell> cellIterator = row.cellIterator();
+			Iterator<Cell> headerIterator = headerRow.cellIterator();
+			while (headerIterator.hasNext()) {
+				Cell headerCell = headerIterator.next();
+				if(headerCell.getStringCellValue().compareTo(columnName)==0){
+					Cell cell = row.getCell(headerCell.getColumnIndex());
+					switch (cell.getCellType()) {
+
+					case Cell.CELL_TYPE_STRING:
+
+						cellValue = cell.getStringCellValue();
+						break;
+
+					case Cell.CELL_TYPE_BOOLEAN:
+
+						cellValue = cell.getStringCellValue();
+						break;
+
+					case Cell.CELL_TYPE_NUMERIC:
+
+						cellValue = String.valueOf((int)cell.getNumericCellValue());
+				
+						
+						break;
+
+					}
+
+					flag = 1;
+					break;
+				}			
+			}	
+		if(flag==0){
+			System.err.println("Column doesn't exist");
+		}
+		return cellValue;
+	} 
+
+	public void setData(String sheetname, int rowNumber, String columnName,String data,String excelFileName) throws IOException {
+
+		FileInputStream inputStream = new FileInputStream(new File(INPUT_XLS));
+
+
+		//Map<Integer, List<String>> data = new HashMap<Integer, List<String>>();
+
+		Workbook workbook = new XSSFWorkbook(inputStream);
+		//workbook.
+		Sheet sheet = workbook.getSheet(sheetname);
+
+		int flag = 0;
+		String cellValue = "";
+		Row headerRow = sheet.getRow(0);
+		Row row = sheet.getRow(rowNumber);
+		
+			//Iterator<Cell> cellIterator = row.cellIterator();
+			Iterator<Cell> headerIterator = headerRow.cellIterator();
+			Byte[] outputData;
+			while (headerIterator.hasNext()) {
+				Cell headerCell = headerIterator.next();
+				if(headerCell.getStringCellValue().compareTo(columnName)==0){
+					Cell cell = row.getCell(headerCell.getColumnIndex());
+					
+					cell.setCellValue(data);
+					//workbook.write(inputStream);
+					
+					//inputStream.flush();
+					//inputStream.close();
+					/*outputData = Byte.parseByte(data);
+					flag = 1;
+					//FileOutputStream fileOut = new FileOutputStream(excelFileName);
+					fileOut.write(outputData);
+					//write this workbook to an Outputstream.
+					workbook.write(fileOut);
+					workbook.
+					fileOut.flush();
+					fileOut.close();*/
+
+					}
+
+					
+					
+				}			
+			
+		if(flag==0){
+			System.err.println("Column doesn't exist");
+		}
+		
+	} 
+	
+	
+public static void writeData(String fpath,String sheetname, int rowNumber, String columnName, String data) throws IOException, OpenXML4JException {
+        
+	
+	FileInputStream inputStream = new FileInputStream(new File(fpath));
+
+	//Map<Integer, List<String>> data = new HashMap<Integer, List<String>>();
+
+	Workbook workbook = new XSSFWorkbook(inputStream);
+
+	Sheet sheet = workbook.getSheet(sheetname);
+
+	int flag = 0;
+	String cellValue = "";
+	Row headerRow = sheet.getRow(0);
+	Row row = sheet.getRow(rowNumber);
+//	HSSFRow row2 = (HSSFRow) sheet.getRow(rowNumber);
+	//Row row2 = sheet.getRow(rowNumber+1);
+		//Iterator<Cell> cellIterator = row.cellIterator();
+		Iterator<Cell> headerIterator = headerRow.cellIterator();
+		//Iterator<Cell> dataIterator = row.cellIterator();
+		while (headerIterator.hasNext()) {
+			Cell headerCell = headerIterator.next();
+			if(headerCell.getStringCellValue().compareTo(columnName)==0){
+				Cell cell = row.getCell(headerCell.getColumnIndex());
+				 if (!(cell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK)) {   //cell is empty
+					 cell.setCellValue(data);
+			        }
+				 else
+				 {
+					XSSFCell cellx =  (XSSFCell) row.createCell(headerCell.getColumnIndex()); 
+					 cellx.setCellValue(data);
+				 }
+				
+				//cell.setCellValue(data);
+			}		
+		}	
+	
+		inputStream.close();
+	
+		FileOutputStream fileOut = new FileOutputStream(new File(fpath));
+		workbook.write(fileOut);
+		//close the stream
+		fileOut.close();
+	
+      /*  OPCPackage pkg = OPCPackage.open(new File(fpath));
+          
+        Workbook workbook = new XSSFWorkbook(pkg);
+        
+        Sheet sheet = workbook.getSheet(sheetname);
+        int flag = 0;
+        String cellValue = "";
+        Row headerRow = sheet.getRow(0);
+        Row row = sheet.getRow(rowNumber);
+        //Iterator<Cell> cellIterator = row.cellIterator();
+        Iterator<Cell> headerIterator = headerRow.cellIterator();
+        Byte[] outputData;
+        while (headerIterator.hasNext()) {
+        
+            Cell headerCell = headerIterator.next();
+            
+            if(headerCell.getStringCellValue().compareTo(columnName)==0){
+                
+                Cell cell = row.getCell(headerCell.getColumnIndex());
+        
+                cell.setCellValue(data);
+            }
+          
+        }
+        
+        pkg.close();*/
+        
+    }
+
+	
+public int getRowCount(String sheetName, String columnName ) throws FileNotFoundException, IOException
+{
+    Workbook workbook = new XSSFWorkbook(new FileInputStream(new File(INPUT_XLS)));
+    
+    Sheet sheet = workbook.getSheet(sheetName);
+    
+    Iterator<Cell> headerIterator = sheet.getRow(0).cellIterator();
+    
+    int flag=0;
+    Cell headerCell= null;
+    while (headerIterator.hasNext())
+    {        
+        headerCell = headerIterator.next();
+        if(headerCell.getStringCellValue().contentEquals(columnName))
+        {
+            flag=1;
+            break;
+        }      
+    }
+    
+    int count = 0;
+    if(flag==1)
+    {
+        Iterator<Row> rowIterator = sheet.rowIterator();
+        while(rowIterator.hasNext())
+        {
+            if(rowIterator.next().getCell(headerCell.getColumnIndex()).getStringCellValue()!=null)
+                count++;
+        }
+    }
+    //workbook.
+    return (count-1);
+}
+
+public String[] getCellsInColumn(String sheetName, String columnname) throws FileNotFoundException, IOException
+{
+    
+    Workbook workbook = new XSSFWorkbook(new FileInputStream(new File(INPUT_XLS)));
+    Sheet sheet = workbook.getSheet(sheetName);
+    
+    Iterator<Cell> headerIterator = sheet.getRow(0).cellIterator();
+    int flag=0;
+    Cell headerCell= null;
+    while (headerIterator.hasNext())
+    {        
+        headerCell = headerIterator.next();
+        if(headerCell.getStringCellValue().contentEquals(columnname))
+        {
+            flag=1;
+            break;
+        }      
+    }
+    
+    int nrows = sheet.getPhysicalNumberOfRows();
+    String data[] = new String[nrows];
+    int count = 0;
+    if(flag==1)
+    {
+        Iterator<Row> rowIterator = sheet.rowIterator();
+        while(rowIterator.hasNext())
+        {
+            String cellvalue = rowIterator.next().getCell(headerCell.getColumnIndex()).getStringCellValue();
+            if(cellvalue!=null)
+            {
+                data[count] = cellvalue;
+                count++;
+            }
+                
+        }
+    }
+    
+    return data;
+    
+}
+
+
 
 }
